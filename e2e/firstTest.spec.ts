@@ -4,26 +4,20 @@ import {test} from '@playwright/test'
 
 test.beforeEach(async ({page})=>{
 
-    await page.goto('https://practice.expandtesting.com/login')
+    await page.goto('https://www.saucedemo.com/')
 })
 test('Differnt locator syntax',async({page})=>{
 
-  page.locator('class=[form-control]');
-
+  await page.getByText('Swag Labs');  
+  
   // by Tag name
-  page.locator('input');
+  await page.locator('[data-test="username"]')  
 
   // by ID
-  page.locator('#username').click();
-
+  await page.locator('#username');
   //by Class value
-  page.locator('.form-control');
-
-  //by attribute
-  page.locator('[name="username"]').click();
+  await page.locator('.form_control');
 
   //combine different slectors
-  page.locator('input[.form-control][name="username"]');
-
   
 })
