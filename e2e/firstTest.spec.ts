@@ -1,4 +1,4 @@
-import {test} from '@playwright/test'
+import {expect, test} from '@playwright/test'
 
 
 
@@ -21,3 +21,18 @@ test('Differnt locator syntax',async({page})=>{
   //combine different slectors
   
 })
+
+test('Login test with valid credentials',async({page})=>{
+
+  await page.locator('[data-test="username"]').fill('standard_user');
+  await page.locator('[data-test="password"]').fill('secret_sauce');
+  await page.locator('[data-test="login-button"]').click();
+
+await page.locator('.app_logo'); // by class
+await page.getByText('Swag Labs'); // by visible text
+await expect(page.getByText('Swag Labs')).toBeVisible();
+
+await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
+
+
+});
