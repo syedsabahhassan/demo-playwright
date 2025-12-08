@@ -20,7 +20,7 @@ export default defineConfig({
 
   // Global defaults for all projects (can be overridden per-project)
   use: {
-    headless: false,                    // run headed by default; override with --headless
+    headless: true,                    // run headed by default; override with --headless
     trace: 'on-first-retry',            // collect trace on retry
     // baseURL: 'http://localhost:3000', // uncomment to enable relative page.goto('/')
     // storageState: 'storage/cardbalance.json', // uncomment to apply to ALL projects
