@@ -2,14 +2,24 @@
   "cookies": [
     {
       "name": "datadome",
-      "value": "3gzngnMfrhKXRMgTYRAZmo6yUHaTphIa4M~Lo6pAerjKhC~u3v0QsyTIbdLn8lHOrzYm_7lrydJMzDaTU4bfPSQXIeXzNaR_hyAP6hx~Q94FUuIpQxtVDBWqfPyEbeTg",
+      "value": "qFoHxTJAqeXATWt5mJgvzyYfrfLYXyVdRZ2ksybD7Y7FeSuxU_Xf0_5GKrJI1JGGw5XND2H8LRXJTk~FBuwzTSF6s44~gvGse9UodHuVm1eaGZKKrkrGlA9Gol2yVPbg",
       "domain": ".cardbalance.com.au",
       "path": "/",
-      "expires": 1764820749,
+      "expires": 1796702872,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Lax"
     }
   ],
-  "origins": []
+  "origins": [
+    {
+      "origin": "https://www.cardbalance.com.au",
+      "localStorage": [
+        {
+          "name": "ddSession",
+          "value": "qFoHxTJAqeXATWt5mJgvzyYfrfLYXyVdRZ2ksybD7Y7FeSuxU_Xf0_5GKrJI1JGGw5XND2H8LRXJTk~FBuwzTSF6s44~gvGse9UodHuVm1eaGZKKrkrGlA9Gol2yVPbg"
+        }
+      ]
+    }
+  ]
 }

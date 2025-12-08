@@ -34,5 +34,7 @@ await expect(page.getByText('Swag Labs')).toBeVisible();
 
 await expect(page.getByText('Sauce Labs Backpack')).toBeVisible();
 
-
+await expect(page.locator('.inventory_item_price').first()).toBeVisible(); 
+await expect(page.locator('.inventory_item_name').first()).toBeVisible(); 
+await expect(page.locator('.inventory_item_description').first()).toBeVisible();
 });
