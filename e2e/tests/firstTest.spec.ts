@@ -41,16 +41,29 @@ await expect(page.locator('.inventory_item_description').first()).toBeVisible();
 
 test('Extract values from UI',async({page})=>{
 
-
-await expect(page.locator('[data-test="login-button"]')).toHaveText('Login');
 const text = (await page.locator('[data-test="login-button"]').textContent())?.trim();
+
 console.log(text);
 
-
+//using playwright built in text assertion
 await expect(page.locator('[data-test="login-button"]')).toHaveText('Login');
 
-  
   
 });
 
+test('Extract different radio buttonvalues',async({page})=>{
+
+  await page.goto('https://demoqa.com/radio-button');
+
+  const radioButtonValues = page.locator('.custom-control.custom-radio label').allTextContents();
+  
+  console.log(await radioButtonValues);
+
+  expect(await radioButtonValues).toContain('Impressive');
+
+  expect(await radioButtonValues).toEqual(['Yes', 'Impressive', 'No']);
+
+
+
+})
 
