@@ -38,3 +38,19 @@ await expect(page.locator('.inventory_item_price').first()).toBeVisible();
 await expect(page.locator('.inventory_item_name').first()).toBeVisible(); 
 await expect(page.locator('.inventory_item_description').first()).toBeVisible();
 });
+
+test('Extract values from UI',async({page})=>{
+
+
+await expect(page.locator('[data-test="login-button"]')).toHaveText('Login');
+const text = (await page.locator('[data-test="login-button"]').textContent())?.trim();
+console.log(text);
+
+
+await expect(page.locator('[data-test="login-button"]')).toHaveText('Login');
+
+  
+  
+});
+
+
