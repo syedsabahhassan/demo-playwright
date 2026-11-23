@@ -56,7 +56,8 @@ test('Extract different radio buttonvalues',async({page})=>{
   await page.goto('https://demoqa.com/radio-button');
 
   // allTextContents() returns a Promise, so await it to get the actual string[].
-  const radioButtonValues = await page.locator('.custom-control.custom-radio label').allTextContents();
+  // (demoqa now uses Bootstrap's .form-check markup instead of .custom-control.)
+  const radioButtonValues = await page.locator('.form-check label').allTextContents();
 
   console.log(radioButtonValues);
   // How do we assert the values of radio buttons? Use toEqual to compare the extracted array with the expected one.
@@ -99,27 +100,30 @@ test('extract and assert values of attributes on the page',async({page})=>{
 test('different ways to assert values of attributes on a page',async({page})=>{
   await page.goto('https://demoqa.com/checkbox');
 
-const homeNode = page.locator('.rct-node').first();
-const desktopNode = page.locator('.rct-node').nth(1);
+  // demoqa's tree is now built with rc-tree: every visible node is a flat role="treeitem"
+  // whose accessible name is "Select <Name> <Name>". Role-based locators survive markup changes
+  // better than CSS class chains like the old '.rct-node'.
+  const treeItem = (name: string) => page.getByRole('treeitem', { name: new RegExp(`^Select ${name} `) });
 
-// Assert 'Home' is visible before interacting
-await expect(homeNode.locator('.rct-title', { hasText: 'Home' })).toBeVisible();
-// Click the toggle to expand 'Home'
-await homeNode.locator('button').click();
+  // Assert 'Home' is visible before interacting
+  await expect(treeItem('Home')).toBeVisible();
+  // Click the toggle (switcher) to expand 'Home'
+  await treeItem('Home').locator('.rc-tree-switcher').click();
 
-// Explicitly wait for 'Desktop' title to appear (this waits for the child node to be ready)
-await expect(homeNode.locator('.rct-title', { hasText: 'Desktop' })).toBeVisible();
+  // Explicitly wait for 'Desktop' to appear (the child node is rendered after expanding)
+  await expect(treeItem('Desktop')).toBeVisible();
 
-// Now interact with 'Desktop' since we know it’s ready
-await desktopNode.locator('button').click();
+  // Now expand 'Desktop' since we know it's ready
+  await treeItem('Desktop').locator('.rc-tree-switcher').click();
 
-// Explicitly wait for 'Commands' to appear before asserting or interacting
-await expect(page.locator('.rct-title', { hasText: 'Commands' })).toBeVisible();
+  // Explicitly wait for 'Commands' to appear before asserting or interacting
+  await expect(treeItem('Commands')).toBeVisible();
 
-
-
-
-
+  // Tick 'Commands' and assert on the checkbox state and the result text
+  const commandsCheckbox = page.getByRole('checkbox', { name: 'Select Commands' });
+  await commandsCheckbox.click();
+  await expect(commandsCheckbox).toHaveAttribute('aria-checked', 'true');
+  await expect(page.locator('#result')).toContainText('commands');
 })
 
 
