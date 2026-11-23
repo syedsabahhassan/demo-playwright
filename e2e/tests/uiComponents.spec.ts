@@ -13,11 +13,14 @@ test.describe('interacting with UI components', () => {
 
     test('Interacting with the text box', async ({ page }) => {
         const firstNameInput = page.locator('#firstName');
+        await firstNameInput.clear();
         await firstNameInput.fill('John');
         await expect(firstNameInput).toHaveValue('John');
 
         const lastNameInput = page.locator('#lastName');
+        
         await lastNameInput.fill('Doe');
+        // await lastNameInput.pressSequentially('Doe',{delay:4000})
         await expect(lastNameInput).toHaveValue('Doe');
 
         const emailInput = page.locator('#userEmail');
@@ -25,6 +28,8 @@ test.describe('interacting with UI components', () => {
         await expect(emailInput).toHaveValue('johndoe@gmail.com');
 
     });
+
+    test
 
 
 

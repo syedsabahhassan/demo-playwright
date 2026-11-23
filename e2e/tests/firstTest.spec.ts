@@ -58,10 +58,11 @@ test('Extract different radio buttonvalues',async({page})=>{
   const radioButtonValues = page.locator('.custom-control.custom-radio label').allTextContents();
   
   console.log(await radioButtonValues);
+ //How do we assert the values of radio buttons? We can use toEqual assertion to compare the extracted values with the expected values.
+ 
+  await expect(radioButtonValues).toEqual(['Yes', 'Impressive', 'No']);
 
-  expect(await radioButtonValues).toContain('Impressive');
-
-  expect(await radioButtonValues).toEqual(['Yes', 'Impressive', 'No']);
+  //expect(await radioButtonValues).toEqual(['Yes', 'Impressive', 'No']);
 
 
 
@@ -122,3 +123,29 @@ await expect(page.locator('.rct-title', { hasText: 'Commands' })).toBeVisible();
 
 })
 
+
+test('radio button test',async({page})=>{
+
+  await page.goto('https://demoqa.com/radio-button');
+
+  // const yesRadioButton = page.locator('label[for="yesRadio"]');
+  const impressiveRadioButton = page.locator('label[for="impressiveRadio"]');
+  const noRadioButton = page.locator('label[for="noRadio"]');
+
+  // Click the "Yes" radio button and assert it's selected
+  // await yesRadioButton.click();
+  // await expect(page.locator('#yesRadio')).toBeChecked();
+
+  await page.getByRole('radio',{name:"Yes"}).check({force:true});
+  
+
+  // Click the "Impressive" radio button and assert it's selected
+  await impressiveRadioButton.click();
+  await page.getByRole('radio',{name:"Impressive"}).check({force:false});
+
+//  await expect(page.locator('#impressiveRadio')).toBeChecked();
+
+  // Assert the "No" radio button is disabled
+  // await expect(page.locator('#noRadio')).toBeDisabled();
+  
+});
