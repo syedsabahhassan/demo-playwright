@@ -4,10 +4,10 @@ import { test, expect } from '@playwright/test';
 
 test.describe('interacting with UI components', () => {
     test.beforeEach(async ({ page }) => {       
-        await page.goto('http://demoqa.com');
-        await page.locator('body > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > a:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > h5:nth-child(1)').click();
-        
-        await page.locator('.router-link[href="/automation-practice-form"]').click();
+        // Go straight to the Practice Form. The old long nth-child CSS chain broke
+        // whenever demoqa changed its home page layout.
+        await page.goto('https://demoqa.com/automation-practice-form');
+        await expect(page.locator('#firstName')).toBeVisible();
 
     });
 
@@ -28,11 +28,5 @@ test.describe('interacting with UI components', () => {
         await expect(emailInput).toHaveValue('johndoe@gmail.com');
 
     });
-
-    test
-
-
-
-
 
 });

@@ -55,14 +55,13 @@ test('Extract different radio buttonvalues',async({page})=>{
 
   await page.goto('https://demoqa.com/radio-button');
 
-  const radioButtonValues = page.locator('.custom-control.custom-radio label').allTextContents();
-  
-  console.log(await radioButtonValues);
- //How do we assert the values of radio buttons? We can use toEqual assertion to compare the extracted values with the expected values.
- 
-  await expect(radioButtonValues).toEqual(['Yes', 'Impressive', 'No']);
+  // allTextContents() returns a Promise, so await it to get the actual string[].
+  const radioButtonValues = await page.locator('.custom-control.custom-radio label').allTextContents();
 
-  //expect(await radioButtonValues).toEqual(['Yes', 'Impressive', 'No']);
+  console.log(radioButtonValues);
+  // How do we assert the values of radio buttons? Use toEqual to compare the extracted array with the expected one.
+  // (Plain values like arrays use a non-async expect, so no `await` before expect here.)
+  expect(radioButtonValues).toEqual(['Yes', 'Impressive', 'No']);
 
 
 
@@ -128,24 +127,22 @@ test('radio button test',async({page})=>{
 
   await page.goto('https://demoqa.com/radio-button');
 
-  // const yesRadioButton = page.locator('label[for="yesRadio"]');
+  // On demoqa the real <input type="radio"> is visually hidden behind a styled label,
+  // so we click the label (what a user clicks) and assert on the input.
+  const yesRadioButton = page.locator('label[for="yesRadio"]');
   const impressiveRadioButton = page.locator('label[for="impressiveRadio"]');
-  const noRadioButton = page.locator('label[for="noRadio"]');
 
-  // Click the "Yes" radio button and assert it's selected
-  // await yesRadioButton.click();
-  // await expect(page.locator('#yesRadio')).toBeChecked();
+  // Click "Yes" and assert it's selected
+  await yesRadioButton.click();
+  await expect(page.getByRole('radio', { name: 'Yes' })).toBeChecked();
+  await expect(page.locator('.text-success')).toHaveText('Yes');
 
-  await page.getByRole('radio',{name:"Yes"}).check({force:true});
-  
-
-  // Click the "Impressive" radio button and assert it's selected
+  // Click "Impressive" and assert it's selected (and "Yes" no longer is)
   await impressiveRadioButton.click();
-  await page.getByRole('radio',{name:"Impressive"}).check({force:false});
-
-//  await expect(page.locator('#impressiveRadio')).toBeChecked();
+  await expect(page.getByRole('radio', { name: 'Impressive' })).toBeChecked();
+  await expect(page.getByRole('radio', { name: 'Yes' })).not.toBeChecked();
+  await expect(page.locator('.text-success')).toHaveText('Impressive');
 
   // Assert the "No" radio button is disabled
-  // await expect(page.locator('#noRadio')).toBeDisabled();
-  
+  await expect(page.locator('#noRadio')).toBeDisabled();
 });
