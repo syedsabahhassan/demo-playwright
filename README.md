@@ -15,7 +15,7 @@ This repository is a **tutorial attempt** to master Playwright testing framework
 
 ## 🛠️ Tech Stack
 
-- **Playwright** v1.56.1 - Modern web automation framework
+- **Playwright** v1.65 - Modern web automation framework
 - **TypeScript** - Type-safe test scripts
 - **Node.js** - JavaScript runtime
 
@@ -31,6 +31,19 @@ npx playwright install
 
 ## 🚀 Running Tests
 
+### Handy npm scripts
+```bash
+npm test                 # all tests, Chromium + WebKit (headless)
+npm run test:chromium    # Chromium only (fastest while practicing)
+npm run test:headed      # Chromium, watch the browser
+npm run test:ui          # Playwright UI mode
+npm run typecheck        # TypeScript check, no browser needed
+npm run report           # open the last HTML report
+```
+
+Tests live in `e2e/tests/` (that's the `testDir` in `playwright.config.ts`). Drop a new `*.spec.ts`
+file there for each assignment and it will be picked up automatically.
+
 ### Run all tests
 ```bash
 npx playwright test
@@ -38,7 +51,7 @@ npx playwright test
 
 ### Run specific test file
 ```bash
-npx playwright test e2e/cardBalance.spec.ts
+npx playwright test e2e/tests/firstTest.spec.ts
 ```
 
 ### Run with UI mode (interactive)
@@ -68,9 +81,11 @@ demo-playwright/
 ├── e2e/                      # End-to-end tests
 │   ├── bootstrap.cardbalance.spec.ts
 │   ├── cardBalance.spec.ts
-│   └── tests/
+│   └── tests/                # <- testDir: everything here runs
+│       ├── autoWaiting.spec.ts
 │       ├── example.spec.ts
-│       └── firstTest.spec.ts
+│       ├── firstTest.spec.ts
+│       └── uiComponents.spec.ts
 ├── tests-examples/           # Playwright example tests
 │   └── demo-todo-app.spec.ts
 ├── playwright-report/        # Test reports (auto-generated)
@@ -118,6 +133,8 @@ test('Extract values from UI', async ({ page }) => {
 ## 🌐 Test Applications
 
 - **Sauce Demo** - `https://www.saucedemo.com/`
+- **DemoQA** - `https://demoqa.com/`
+- **UI Testing Playground** - `http://uitestingplayground.com/`
 - **Todo Demo App** - Built-in Playwright examples
 
 ## 📊 Browsers Tested

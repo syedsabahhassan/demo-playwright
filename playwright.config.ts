@@ -6,7 +6,8 @@ import { defineConfig, devices } from '@playwright/test';
  * Docs: https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  // Where your tests live (you’re using e2e/)
+  // Where your tests live. The cardbalance specs in e2e/ are intentionally
+  // excluded: that site is bot-protected and needs a manual bootstrap.
   testDir: './e2e/tests',
 
   // Parallelism & retries
@@ -20,7 +21,7 @@ export default defineConfig({
 
   // Global defaults for all projects (can be overridden per-project)
   use: {
-    headless: true,                    // run headed by default; override with --headless
+    headless: true,                     // headless by default; watch the browser with --headed
     trace: 'on-first-retry',            // collect trace on retry
     // baseURL: 'http://localhost:3000', // uncomment to enable relative page.goto('/')
     // storageState: 'storage/cardbalance.json', // uncomment to apply to ALL projects
